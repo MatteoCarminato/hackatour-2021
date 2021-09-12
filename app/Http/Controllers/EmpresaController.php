@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientsCheckout;
 use App\Models\Empresa;
 use App\Traits\HashEmpresa;
 use Illuminate\Http\Request;
@@ -92,9 +93,26 @@ class EmpresaController extends Controller
     }
 
     public function qrCodeEmpresa($empresa){
-        // $url = env('APP_URL').'/checkinempresa/'.$empresa;
-        // $qrcode = QRCode::text($url)->png();
         return view('admin.empresa.qrcode',compact('empresa'));
+    }
+
+    public function createCheckOut($empresa){
+        $empresa = Empresa::where('codigo', $empresa)->first();
+        if(!$empresa){
+            return view('admin.includes.error');
+        }
+
+        return view('admin.empresa.cadastrar_checkout', compact('empresa'));
+    }
+
+    public function createCheckOutMov($empresa){
+
+        $checkout = ClientsCheckout::find($empresa);
+        if(!$checkout){
+            return view('admin.includes.error');
+        }
+        
+        return view('admin.movimentacao.qrcode', compact('checkout'));
     }
 
 }

@@ -23,6 +23,9 @@ Route::get('/', function () {
 
 Route::resource('empresa', EmpresaController::class)->middleware('auth');
 Route::get('/qrcodeempresa/{id}', [EmpresaController::class, 'qrCodeEmpresa'])->name('QRCodeEmpresa')->middleware('auth');
+Route::get('/createcheckout/{id}', [EmpresaController::class, 'createCheckOut'])->name('createCheckOut')->middleware('auth');
+
+Route::get('/createcheckout_mov/{id}', [EmpresaController::class, 'createCheckOutMov'])->name('createCheckOutMov')->middleware('auth');
 
 
 Route::resource('user', UserController::class)->middleware('auth');
@@ -30,6 +33,8 @@ Route::resource('user', UserController::class)->middleware('auth');
 Route::get('/getcheckin', [MovimentacaoController::class, 'getCheckIn'])->name('getCheckIn')->middleware('auth');
 Route::get('/getcheckout', [MovimentacaoController::class, 'getCheckOut'])->name('getCheckOut')->middleware('auth');
 Route::get('/storecheckin/{codigo}', [MovimentacaoController::class, 'storeCheckIn'])->name('storeCheckIn')->middleware('auth');
+Route::post('/storecheckout', [MovimentacaoController::class, 'storeCheckOut'])->name('storeCheckOut')->middleware('auth');
+Route::get('/clientcheckout/{id}', [MovimentacaoController::class, 'clientCheckOut'])->name('clientCheckOut')->middleware('auth');
 
 
 

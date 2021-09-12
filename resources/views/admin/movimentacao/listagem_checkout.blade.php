@@ -9,20 +9,15 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Listagem de Empresa</h1>
+            <h1>Movimentação Check Out</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Listagem de Empresa</li>
+              <li class="breadcrumb-item active">Movimentação Check Out</li>
             </ol>
           </div>
         </div>
-        @if ($message = Session::get('success'))
-          <div class="alert alert-success border-0" role="alert">
-            <strong>{{ $message }}</strong>!
-          </div>
-        @endif
       </div><!-- /.container-fluid -->
     </section>
 
@@ -38,20 +33,27 @@
                   <thead>
                     <tr>
                       <th style="width: 10px">#</th>
-                      <th>Nome</th>
-                      <th>Código</th>
-                      <th>Qrcode Check In</th>
-                      <th>Check Out</th>
+                      <th>Nome Cliente</th>
+                      <th>Nome Empresa</th>
+                      <th>Valor Gasto</th>
+                      <th>Tipo Pagamento</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                      @foreach ($empresas as $empresa)
+                      @foreach ($movimentacao as $row)
                         <tr>
-                        <td>{{ $empresa->id }}</td>
-                        <td>{{ $empresa->nome }}</td>
-                        <td>{{ $empresa->codigo }}</td>
-                        <td><a href="{{route('QRCodeEmpresa',$empresa->codigo)}}">Qrcode</a></td>
-                        <td><a href="{{route('createCheckOut',$empresa->codigo)}}">Gerar</a></td>
+                          <td>{{ $row->id }}</td>
+                          <td>{{ $row->nome_cliente }}</td>
+                          <td>{{ $row->nome_empresa }}</td>
+                          <td>{{ $row->valor_gasto }}</td>
+                          <td>{{ $row->tipo_pagamento }}</td>
+                            @if ($row->status == 0) 
+                              <td> <a href="{{route('createCheckOutMov',$row->id)}}">QR Code</a> </td>
+                            @endif
+                            @if ($row->status == 1) 
+                              <td> Sucesso </td>
+                            @endif                                
                         </tr>
                     @endforeach
                   </tbody>
